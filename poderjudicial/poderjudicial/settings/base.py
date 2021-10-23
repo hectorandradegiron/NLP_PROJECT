@@ -2,7 +2,9 @@
 """
 
 from pathlib import Path
-
+from django.core import exceptions
+from django.core.exceptions import ImproperlyConfigured
+import json
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 
 
@@ -15,7 +17,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-)er2p46uygo8g_4ndec=#-7ce(ct$b$*=yna)6gls*s#k&99jz'
+with open("secret.json")as f:
+    secret = json.loads(f.read())
+
+def get_secret(secret_name,  secrets= secret):
+    try:
+        return secrets[secret_name]
+    except:
+        msg = "la variable %s no existe" % secret_name
+        raise ImproperlyConfigured(msg)
+
+SECRET_KEY = get_secret('SECRET_KEY')
+#SECRET_KEY = 'django-insecure-)er2p46uygo8g_4ndec=#-7ce(ct$b$*=yna)6gls*s#k&99jz'
 
 
 # Application definition
