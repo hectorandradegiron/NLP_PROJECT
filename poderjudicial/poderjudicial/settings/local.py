@@ -17,3 +17,9 @@ DATABASES = {
 
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS= [BASE_DIR.child('static')]
+
+import os
+MEDIA_URL = '/EXPEDIENTES/'
+
+MEDIA_ROOT= os.path.join(BASE_DIR, 'EXPEDIENTES')

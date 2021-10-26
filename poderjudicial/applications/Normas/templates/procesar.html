@@ -1,0 +1,52 @@
+{% extends 'panel.html' %}
+
+{% block panel-content %}
+
+<div class="row">
+    <div class="columns">
+      <h2>PROCESAR DOCUMENTO</h2>
+      <p>Relación de expedientes y su respectivo estado <code>.Procesar</code>.</p>
+      <table class="stack">
+        <thead>
+          <tr>
+            <th width="50">Fecha Documento</th>
+            <th width="30">Tipo Documento</th>
+            <th width="30">Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+            {%  for e in  object_list    %}
+          <tr>
+            <td>{{e.fecha_documento}}</td>
+            <td> tipo </td>
+            {% if e.estado == True %}
+            <td>
+                
+                <button class="hollow button success" href="">Procesado</button>
+
+
+            </td>
+           
+            {% endif %}
+
+            {% if e.estado == False %}
+            <td>
+                <a class="button alert" href="{% url 'normas_app:vertexto' e.id  %}">Procesar -></a>                        
+            
+            </td>
+            {% endif %}
+
+            
+          
+          </tr>
+
+          {%  endfor   %}
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+
+
+{% endblock panel-content %}

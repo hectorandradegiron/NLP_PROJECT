@@ -1,0 +1,46 @@
+{% extends 'panel.html' %}
+
+{% block panel-content %}
+
+<div class="row">
+    <div class="columns">
+      <h2>VER RESULTADOS</h2>
+      <p>Se han aplicado diversas técnicas (combinadas) para reducir el ruido en la imagen, <br>
+        seguidamente se ha aplicado <b>Redes Neuronales Recurrentes</b> para extraer texto de la imágenes
+         <code>.Deep Learning</code>.</p>      
+      
+      <a class="button warning" href="{% url 'normas_app:procesar' %}">Regresar</a>
+      <table class="stack">
+        <thead>
+          <tr>
+            <th width="40">Fecha Documento</th>
+            <th width="500">Texto</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+            {%  for e in  lista    %}
+          <tr>
+            <td>{{e.fecha_documento}}</td>
+            <td> 
+              
+              <ul class="accordion" data-accordion data-multi-expand="true">
+                {{texto}}
+              </ul>
+              
+             </td>
+
+                        
+          
+          </tr>
+
+          {%  endfor   %}
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+
+
+{% endblock panel-content %}

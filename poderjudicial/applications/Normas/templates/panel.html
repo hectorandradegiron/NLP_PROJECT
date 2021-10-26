@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% load  static %}
+
+{% block content %}
+
+<div class="off-canvas-wrapper">
+  <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
+
+    <div class="off-canvas position-left reveal-for-large" id="my-info" data-off-canvas data-position="left" style="background-color: #424242;">
+      <div class="row column">
+        <h3 style="text-align: center; padding: 0.3em; color: #ffae00;">ESTADISTICA</h3>
+        <ul class="vertical menu">
+
+          <li>
+            <a href="#"><span class="label warning">PREPROCESAMIENTO</span></a>
+            <ul class="nested vertical menu">
+              <li >
+                <a href="{% url 'normas_app:adjuntar' %}" style="color: white;">Subir Documento</a>
+              </li>
+              <li >
+                <a href="{% url 'normas_app:procesar' %}" style="color: white;">Procesar</a>
+              </li>
+              
+                          
+              
+            </ul>
+          </li>
+
+            <li>
+              <a href="#"><span class="label warning">PREPROCESAMIENTO</span></a>
+              <ul class="nested vertical menu">
+                <li >
+                  <a href="#" style="color: white;">Binarisation</a>
+                </li>
+                <li >
+                  <a href="#" style="color: white;">Thresholding</a>
+                </li>
+                <li >
+                  <a href="#" style="color: white;">Rescaling</a>
+                </li>
+                <li >
+                  <a href="#" style="color: white;">Noise Removal</a>
+                </li>             
+                
+              </ul>
+            </li>
+           
+
+            <li>
+              <a href="#"><span class="label warning">EXTRACCIÓN </span></a>
+              <ul class="nested vertical menu">
+                <li >
+                  <a href="#" style="color: white;">CTPN Model</a>
+                </li>
+                <li >
+                  <a href="#" style="color: white;">EAST Model</a>
+                </li>
+                <li >
+                  <a href="#" style="color: white;">Tesseract</a>
+                </li>
+                            
+                
+              </ul>
+            </li>
+
+
+            <li>
+              <a href="#"><span class="label warning">PROCES. DE LENGUAJE</span></a>
+              <ul class="nested vertical menu">
+                <li >
+                  <a href="#" style="color: white;">Clasificación</a>
+                </li>
+                <li >
+                  <a href="#" style="color: white;">Analisis Semantico</a>
+                </li>
+                <li >
+                  <a href="#" style="color: white;">Analisis de significado</a>
+                </li>
+
+                          
+                
+              </ul>
+            </li>    
+
+
+
+
+        </ul>
+
+
+      </div>
+    </div>
+
+    <div class="off-canvas-content" data-off-canvas-content>
+      <!-- declaramos un nuevo bloque para contenidod e panel -->
+      <div class="grid-x">
+        <div class="cell top-bar" style="background-color: #424242;">
+          <div class="top-bar-left">
+            <h4 style="color: white;">Sesion de: {{ user.full_name }}</h4>
+          </div>
+          <div class="top-bar-right">
+            <a href="#">
+              <span class="label warning">Salir</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="grid-container" style="padding: 1em;">
+        {% block panel-content %}
+        {% endblock panel-content %}
+      </div>
+  </div>
+</div>
+{% endblock content %}

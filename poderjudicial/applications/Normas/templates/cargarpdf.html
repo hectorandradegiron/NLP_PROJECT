@@ -1,1 +1,22 @@
-<h1>Hola</h1>
+{% extends 'panel.html' %}
+
+{% block panel-content %}
+
+<h2>SUBIR EXPEDIENTE   <br></h2>
+
+
+<form method="POST" enctype="multipart/form-data">{% csrf_token %}
+
+    {{form.as_p}}
+
+
+<button type="submit" class="button secondary">Save</button>
+
+</form>
+
+{% endblock panel-content %}
+
+
+
+
+
