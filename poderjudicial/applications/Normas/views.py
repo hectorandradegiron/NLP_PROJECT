@@ -7,7 +7,7 @@ from applications.Normas.models import Expediente
 from .forms import ExpedienteForm
 # importamos la función
 
-from .functions import  text
+from .functions import  images_to_text, pdf_to_text
  #Create your views here.
 
 class CargarView(CreateView):
@@ -37,8 +37,8 @@ class TextoView(ListView):
         lista= Expediente.objects.filter(id=id)
         context['lista'] = lista 
         for e in lista:
-            enlace = settings.MEDIA_ROOT + '\\' + str(e.expediente)
-            context['texto'] = text(str(enlace))    
+            enlace = settings.MEDIA_ROOT + '/' + str(e.expediente)
+            context['texto'] = pdf_to_text(str(enlace))    
             
 
         return context
