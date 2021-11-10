@@ -8,6 +8,10 @@ import os
 import tempfile
 from pdf2image import convert_from_path
 from PIL import Image
+from spacy.matcher import Matcher
+from spacy.lang.es import Spanish
+import spacy
+import re 
 
 def images_to_text(enlace):
  
@@ -59,6 +63,112 @@ def pdf_to_text(enlace):
 
     return resultado
 
+
+# segmenta el texto completo generado por el OCR
+def segmenta_texto_completo(texto, cargo):
+    nlp = Spanish()
+    doc = nlp(texto)
+    inicio = []
+    fin = []
+    texto = []
+    for token in doc:
+        if token.text =="SE":
+            span_inicio = doc[token.i+1]
+            
+            if span_inicio.text == "RESUELVE":
+                inicio.append(token.i)
+
+
+    for token in doc:        
+        if token.text =="Regístrese":
+            span_fin = doc[token.i+1]
+
+            if span_fin.text == ",":
+                if token.i > inicio[0]:                 
+                    fin.append(token.i)
+  
+    
+    for  i in range(len(fin)):
+        span = doc[inicio[i]:fin[i]]
+        texto.append(span.text) 
+
+    return discriminar_lista_texto(texto, cargo)
+
+
+
+
+# extrae nombre de la persona del texto discriminado
+def extrae_nombre_persona(texto):
+    nlp = Spanish()
+    doc = nlp(texto)
+    inicio = 0
+    fin = 0
+    nombre = ""
+    for token in doc:
+        if token.text =="Designar":                   
+            inicio =token.i
+
+
+    for token in doc:        
+        if token.text =="el":
+            span_fin = doc[token.i+1]
+
+            if span_fin.text == "puesto":                             
+                fin = token.i
+  
+    
+    
+    span = doc[inicio:fin]
+    nombre = span.text
+    return nombre
+
+    
+    return 
+
+
+
+# Función compara cada elemento de la lista con el cargo, para identificar el segmento de texto correcto
+def discriminar_lista_texto(lista, textobuscar):
+    nlp = spacy.load("es_core_news_md")
+    doc1= nlp(textobuscar)    
+    
+    for  i in range(len(lista)):
+        doc2= nlp(lista[i])   
+        
+        if doc1.similarity(doc2)>0.9:     
+            texto = lista[i]
+
+    return extrae_nombre_persona(texto)
+
+
+# Función para reconcer género
+def reconoce_genero(nombre):
+    
+    genero = "Indefinido"
+    nlp = spacy.load("es_core_news_md")
+    doc_femenino= nlp("a la señora") 
+    doc_masculino= nlp("al señor") 
+    doc_nombre = nlp(nombre)  
+              
+    if doc_femenino.similarity(doc_nombre)>0.6:     
+        genero = "Femenino"
+    if doc_masculino.similarity(doc_nombre)>0.5:     
+        genero = "Masculino"
+
+    return genero
+
+def limpiar_nombre(texto):
+    nlp = spacy.load("es_core_news_md")
+    doc = nlp(texto)
+    texto = ""
+    for token in doc:
+        if token.pos_ == "PROPN":
+            texto = texto + token.text + " "
+    
+    return texto
+
+
+        
 
 
 

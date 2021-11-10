@@ -13,28 +13,50 @@
       <table class="stack">
         <thead>
           <tr>
-            <th width="40">Fecha Documento</th>
-            <th width="500">Texto</th>
+            <th width="80">Fecha</th>
+            <th width="200">Institución</th>
+            <th width="200">Cargo</th>
+            <th width="200">Nombre</th>
+            <th width="50">Genero</th>
             
           </tr>
         </thead>
         <tbody>
-            {%  for e in  lista    %}
+            
           <tr>
-            <td>{{e.fecha_documento}}</td>
-            <td> 
-              
+            <td>
               <ul class="accordion" data-accordion data-multi-expand="true">
-                {{texto}}
-              </ul>
-              
+                {{fecha}}
+              </ul> 
+            </td>
+            <td>               
+              <ul class="accordion" data-accordion data-multi-expand="true">
+                {{entidad}}
+              </ul>              
+             </td>
+             <td>               
+              <ul class="accordion" data-accordion data-multi-expand="true">
+                {{cargo}}
+              </ul>              
+             </td>
+
+             <td>               
+              <ul class="accordion" data-accordion data-multi-expand="true">
+                {{nombre}}
+              </ul>              
+             </td>
+
+             <td>               
+              <ul class="accordion" data-accordion data-multi-expand="true">
+                {{genero}}
+              </ul>              
              </td>
 
                         
           
           </tr>
 
-          {%  endfor   %}
+         
 
         </tbody>
       </table>

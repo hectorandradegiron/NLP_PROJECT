@@ -7,7 +7,7 @@ from applications.Normas.models import Expediente
 from .forms import ExpedienteForm
 # importamos la función
 
-from .functions import  images_to_text, pdf_to_text
+from .functions import  images_to_text, pdf_to_text, segmenta_texto_completo, reconoce_genero, limpiar_nombre
  #Create your views here.
 
 class CargarView(CreateView):
@@ -38,8 +38,17 @@ class TextoView(ListView):
         context['lista'] = lista 
         for e in lista:
             enlace = settings.MEDIA_ROOT + '/' + str(e.expediente)
-            context['texto'] = pdf_to_text(str(enlace))    
-            
+            fecha = str(e.fecha_documento)
+        resultado = pdf_to_text(str(enlace))  
+        cargo = "Jefa de Gabinete de Asesores de la Dirección Ejecutiva de la Autoridad para la Reconstrucción con Cambios"
+        entidad ="PRESIDENCIA DEL CONSEJO DE MINSITROS"
+        resultado = segmenta_texto_completo(resultado, cargo)
+        context['fecha'] = fecha
+        context['genero'] = reconoce_genero(resultado)  
+        context['nombre'] = limpiar_nombre(resultado)
+        context['cargo'] = cargo
+        context['entidad'] = entidad
+
 
         return context
 
